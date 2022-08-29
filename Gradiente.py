@@ -14,30 +14,75 @@ Implementar o Algoritmo do Gradiente na orimização do seguinte problema:
 '''
 
 import numpy as np
-import matplotlib.pyplot as plt
-import pandas as plt
-from matplotlib import cm
+from matplotlib import pyplot as plt
+import pandas as pd
 
-# def f_x(x,y):
-#     return (x - 1)**2 + 2*y**2
+dados = pd.DataFrame()
+dados['x'] = np.linspace(-10,10,100)   #Criação do vertor de x1
+dados['y'] = np.linspace(-10,10,100)   #Criação do vertor de x2
+x1 = dados['x']
+x2 = dados['y']
 
-# def gradiente(x,y):
-#     return np.array([2*(x - 1), 4*y])
+def f_x(x1, x2):
+    """
+    Parametro
+    ----------
+    x1 (float): Ponto X1 da funcão no eixo x.
+    x2 (float): Ponto X2 da função no eixo y.
 
-x = np.linspace(-10.0,10.0,100)
-y = np.linspace(-10.0,10.0,100)
+    Retorno
+    ----------
+    f_x (float): Após o calculo, irá me retornar o vetor 'Z'
+    função que retorna o valor de f(x1,x2) para um deterninado x1,x2
+    """
+    return (x1-1)**2 + 2*x2**2
 
-xlinha,ylinha=np.meshgrid(x,y)
+def linha_x1(x1):
+    """
+    Parametro
+    ----------
+    x1 (float): Ponto X1 da funcão custo no eixo x1.
+    
+    Retorno
+    ----------
+        Função que retorna o valor de custo de f(x1) para um deterninado x1
+    """
+    return 2*(x1 - 1)
 
-zlinha = ((xlinha-1)**2 + (2 * ylinha)**2)
+def linha_x2(x2):
+    """
+    Parametro
+    ----------
+    x2 (float): Ponto X2 da funcão custo no eixo x2.
 
-plt.contour(xlinha,ylinha,zlinha)
+    Retorno
+    ----------
+        Função que retorna o valor de custo de f(x2) para um deterninado x2
+
+    """
+    return 4*x2
+
+def z_funcao():
+    """
+    Parametro
+    ----------
+    Z (float): Ponto Z da funcão custo no eixo z.
+
+    Retorno
+    ----------
+        Função que retorna um array para o Z do valor de custo de f(x1, x2) para um deterninado x1, x2
+
+    """
+    return np.array(f_x(x1,x2))
+
+dados['z'] = np.array(f_x(x1,x2))
+z_final = dados['z']   #z_final está recebendo o array de Z
+
+print(f' A funcao tem o seu valor de:\n{f_x(x1, x2)}\n')
+print(f' A funcao custo em X1 tem o seu valor de:\n{linha_x1(x1)} e em X2: \n{linha_x2(x2)}')
+
+grafico = plt.axes(projection='3d')
+grafico.plot( linha_x1(x1),linha_x2(x2),z_final)    #plotagem da curvas de nível da funcão custo(objetivo)
+grafico.scatter([1],[0], color='black', marker='x')    #marcação do ponto ótimo [1,0]
+grafico.set(title='Curvas de Nível Gradiente', xlabel='eixo x1', ylabel='eixo x2', zlabel='eixo f(x1,x2)')
 plt.show()
-
-# ax = plt.axes(projection='3d')
-# ax.view_init(50, 30)
-# ax.plot_surface(x, y, z, cmap=cm.coolwarm )
-# ax.set_xlabel('eixo x')
-# ax.set_ylabel('eixo y')
-# ax.set_zlabel('eixo z')
-
