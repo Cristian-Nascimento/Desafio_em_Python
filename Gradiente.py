@@ -11,13 +11,11 @@ Implementar o Algoritmo do Gradiente na orimização do seguinte problema:
     Número máximo de iterações
     ||∇f(x¯)||≤ϵ
 .Ponto inicial:  x¯0=[10,10]T
-'''
 
-"""
 Created on Sun Sep  4 00:01:55 2022
 
 @author: Cristian
-"""
+'''
 
 import numpy as np
 from matplotlib import pyplot as plt
